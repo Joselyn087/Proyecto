@@ -46,6 +46,7 @@ public class Protagonista {
 		
 	}
 	
+	
 
 	public int getDanoAtaque() {
 		return danoAtaque;
@@ -112,7 +113,7 @@ public class Protagonista {
 	
 	@Override
 	public String toString() {
-		return "las vistorias: " + victorias;
+		return "Protagonista: nombre: " + nombre + " vitalidad: " + vitalidad + "";
 	}
 
 }

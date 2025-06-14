@@ -31,7 +31,9 @@ public class JuegoRPG {
 		escritor = new Escritor();
 		tienda = new Tienda();
 		
-		
+		String nombreProtagonista = protagonista.nombreProtaginista();
+		String nombreEnemigoTierra = enemigo.nombreEnemigosTierra();
+		String nombreEnemigoMar = enemigo.nombreEnemigosMar();
 		boolean jugar = true;
 		while(jugar){
 			escritor.escribir("Las posibilidades son múltiples; algunas elecciones son sencillas, otras sensatas, unas temerarias... \n"
@@ -39,11 +41,12 @@ public class JuegoRPG {
 						+ "resultados diferentes. Recuerda que tú decides la aventura, que tú eres la aventura. Si tomas una decisión \n"
 						+ "imprudente, vuelve al principio y empieza de nuevo. No hay opciones acertadas o erróneas, sino muchas elecciones \n"
 						+ "posibles. Elige tu propia aventura");
-			String nombreProtagonista = protagonista.nombreProtaginista();
+			
 			escritor.escribir("El heroe con el que jugaras el dia de hoy se llama " + nombreProtagonista);
 			
 			opcionMenu = lector.leerInt("1. Explorar \n2.Estado \n3.Tienda \n4.Salir");
 			switch(opcionMenu) {
+				// explorar
 				case 1:
 					int opcionLugar = lector.leerInt("Selecciona un lugar \n1.Tierra \n2.Mar");
 					boolean luchar = true;
@@ -57,8 +60,33 @@ public class JuegoRPG {
 								accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
 								switch(accion) {
 									case 1:
+										while(protagonista.getVitalidad() > 0 && enemigo.getVitalidad() > 0) {
+											
+											//ataque protagonista
+											enemigo.setVitalidad(enemigo.getVitalidad()- protagonista.getDanoAtaque());
+											escritor.escribir("¡Atacas al enemigo! Vitalidad del enemigo: " + enemigo.getVitalidad());
+											
+											if(enemigo.getVitalidad() <= 0) {
+												escritor.escribir("¡Has derrotado al enemigo!");
+												protagonista.setVictorias(protagonista.getVictorias() + 1);
+												protagonista.setDinero(protagonista.getDinero() + 50);
+											}
+											
+											//ataque enemigo
+											protagonista.setVitalidad(protagonista.getVitalidad() - enemigo.getDanoAtaque());
+									        escritor.escribir("El enemigo te ataca. Tu vitalidad: " + protagonista.getVitalidad());
+
+									        if (protagonista.getVitalidad() <= 0) {
+									            escritor.escribir("¡Has sido derrotado!");
+									            protagonista.setDerrotas(protagonista.getDerrotas() + 1);
+									        }
+
+											
+										}
 									break;
 									case 2:
+										escritor.escribir("el protagonista se retira del combate contra " + nombreEnemigoTierra);
+										luchar = false;
 									break;
 									case 3:
 									break;
@@ -71,7 +99,18 @@ public class JuegoRPG {
 							escritor.escribir("“Surcas las costas escarpadas, donde las olas rompen con furia. De las\r\n"
 									+ "aguas oscuras asciende una criatura ancestral…”");
 							while(luchar) {
-								
+								accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
+								switch(accion) {
+									case 1:
+									break;
+									case 2:
+										escritor.escribir("el protagonista se retira del combate contra " + nombreEnemigoMar);
+										luchar = false;
+									break;
+									case 3:
+									break;
+									default:
+								}
 							}
 						break;
 						default:
@@ -81,6 +120,11 @@ public class JuegoRPG {
 					
 				break;
 				case 2:
+					escritor.escribir("\nESTADO DEL PROTAGONISTA" + "\nNombre: " + nombreProtagonista + "\nVitalidad: " + protagonista.getVitalidad() + "\nDaño de Ataque: " + protagonista.getDanoAtaque() + "\nDinero: " + protagonista.getDinero()
+			     	+ "\nVictorias: " + protagonista.getVictorias() + "\nDerrotas: " + protagonista.getDerrotas()
+			        + "\nPociones de Vitalidad: " + protagonista.getPocionVitalidad()
+			        + "\nPociones de Intercambio: " + protagonista.getPocionIntercambio());
+					
 				break;
 				case 3:
 					escritor.escribir("“Encuentras una carreta abandonada convertida en tienda por un mercader\r\n"
@@ -97,7 +141,5 @@ public class JuegoRPG {
 			}
 		}
 	}
-}
 	
-
-
+}
