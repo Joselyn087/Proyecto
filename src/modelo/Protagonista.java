@@ -45,9 +45,6 @@ public class Protagonista {
 		return nombre;
 		
 	}
-
-	
-
 	
 
 	public int getDanoAtaque() {
