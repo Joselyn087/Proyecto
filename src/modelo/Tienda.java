@@ -3,7 +3,7 @@ package modelo;
 import vista.joption.Escritor;
 
 public class Tienda {
-	private int preciVitalidad;
+	private int precioVitalidad;
 	private int precioIntercambio;
 	private int cantidadVitalidad;
 	private int cantidadIntercambio;
@@ -14,13 +14,12 @@ public class Tienda {
 	
 	
 	public Tienda() {
-		preciVitalidad = 0;
-		precioIntercambio = 0;
-		cantidadIntercambio= 0;
-		cantidadIntercambio = 0;
+		precioVitalidad = 10;
+		precioIntercambio = 20;
+		cantidadIntercambio = 2;
 		azarVitalidad = new RuedaDelDestino(10,40);
 		protagonista = new Protagonista();
-		cantidadVitalidad = azarVitalidad.numeroAzar();
+		cantidadVitalidad = 2;
 		escritor = new Escritor();
 		enemigo = new Enemigo();
 		
@@ -29,18 +28,20 @@ public class Tienda {
 	public void compraPocionVitalidad() {
 		if(cantidadVitalidad<= 0) {
 			escritor.escribir("No quedan posicines de vitalidad");
-		}
 		
-		if(protagonista.getDinero() < preciVitalidad) {
+		}else if(protagonista.getDinero() < precioVitalidad) {
 			escritor.escribir("No tienes suficiente dinero");
+		
+		}else{
+			protagonista.setDinero(protagonista.getDinero() - precioVitalidad);
+		
+			//por aqui esta el error
+			int aumentoVitalidad = azarVitalidad.numeroAzar();
+			protagonista.setVitalidad(protagonista.getVitalidad() + aumentoVitalidad);
+		
+			cantidadVitalidad--;
+			escritor.escribir("Has comprado una poción de vitalidad.");
 		}
-		
-		protagonista.setDinero(protagonista.getDinero() - preciVitalidad);
-		
-		int aumentoVitalidad = azarVitalidad.numeroAzar();
-		protagonista.setVitalidad(protagonista.getVitalidad() + aumentoVitalidad);
-		
-		cantidadVitalidad--;
 			
 	}
 	
@@ -72,6 +73,22 @@ public class Tienda {
 
 	public void setCantidadVitalidad(int cantidadVitalidad) {
 		this.cantidadVitalidad = cantidadVitalidad;
+	}
+	
+	public int getPrecioVitalidad() {
+		return precioVitalidad;
+	}
+
+	public void setPrecioVitalidad(int precioVitalidad) {
+		this.precioVitalidad = precioVitalidad;
+	}
+	
+	public int getPrecioIntercambio() {
+		return precioIntercambio;
+	}
+
+	public void setPrecioIntercambio(int precioIntercambio) {
+		this.precioIntercambio = precioIntercambio;
 	}
 	
 	

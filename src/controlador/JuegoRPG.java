@@ -49,16 +49,17 @@ public class JuegoRPG {
 				// explorar
 				case 1:
 					int opcionLugar = lector.leerInt("Selecciona un lugar \n1.Tierra \n2.Mar");
-					boolean luchar = true;
-					int accion;
+					
 					switch(opcionLugar) {
+						//Tierra
 						case 1:
 							escritor.escribir("“Caminas entre ruinas cubiertas de hiedra. El viento susurra secretos\r\n"
 									+ "olvidados. De pronto, una figura emerge entre el polvo…”");
-							
-							while(luchar) {
-								accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
+							boolean lucharTierra = true;
+							while(lucharTierra) {
+								int accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
 								switch(accion) {
+									//Luchar
 									case 1:
 										while(protagonista.getVitalidad() > 0 && enemigo.getVitalidad() > 0) {
 											
@@ -84,28 +85,33 @@ public class JuegoRPG {
 											
 										}
 									break;
+									//Correr
 									case 2:
 										escritor.escribir("el protagonista se retira del combate contra " + nombreEnemigoTierra);
-										luchar = false;
+										lucharTierra = false;
 									break;
+									//ir a la tienda
 									case 3:
 									break;
 									default:
+										escritor.escribir("Digite una opcion valida");
 								}
 								
 							}
 						break;
+						//Mar
 						case 2:
 							escritor.escribir("“Surcas las costas escarpadas, donde las olas rompen con furia. De las\r\n"
 									+ "aguas oscuras asciende una criatura ancestral…”");
-							while(luchar) {
-								accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
-								switch(accion) {
+							boolean lugarMar = true;
+							while(lugarMar) {
+								int accionMar = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda");
+								switch(accionMar) {
 									case 1:
 									break;
 									case 2:
 										escritor.escribir("el protagonista se retira del combate contra " + nombreEnemigoMar);
-										luchar = false;
+										lugarMar = false;
 									break;
 									case 3:
 									break;
@@ -119,6 +125,7 @@ public class JuegoRPG {
 					}
 					
 				break;
+				//Explorar
 				case 2:
 					escritor.escribir("\nESTADO DEL PROTAGONISTA" + "\nNombre: " + nombreProtagonista + "\nVitalidad: " + protagonista.getVitalidad() + "\nDaño de Ataque: " + protagonista.getDanoAtaque() + "\nDinero: " + protagonista.getDinero()
 			     	+ "\nVictorias: " + protagonista.getVictorias() + "\nDerrotas: " + protagonista.getDerrotas()
@@ -126,11 +133,48 @@ public class JuegoRPG {
 			        + "\nPociones de Intercambio: " + protagonista.getPocionIntercambio());
 					
 				break;
+				//Tienda
 				case 3:
-					escritor.escribir("“Encuentras una carreta abandonada convertida en tienda por un mercader\r\n"
+					boolean entrarTienda = true;
+					while(entrarTienda) {
+						escritor.escribir("“Encuentras una carreta abandonada convertida en tienda por un mercader\r\n"
 							+ "nómada. ‘Solo vendo a los que tienen valor... y monedas’, dice mientras ríe con\r\n"
 							+ "dientes dorados.”");
+						int opcionCompra = lector.leerInt("Bienvenido a la tienda \n Su dinero es " + protagonista.getDinero() 
+						+ "\n1. Comprar poción de vitalidad (10 monedas) \n2. Comprar poción de intercambio (30 monedas)");
+						
+						switch(opcionCompra) {
+							case 1:
+								//no se esta suma la vitalidad de la posion cuando se compra
+								if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
+									tienda.compraPocionVitalidad();
+									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioVitalidad());
+									protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
+									
+									escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
+								}else {
+									escritor.escribir("No tienes suficiente dinero");
+								}
+								
+							break;
+							case 2:
+								//Comprar posion intercambio
+								if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
+									tienda.compraPocionIntercambio();
+									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+									protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
+								}else {
+									escritor.escribir("No tienes suficinte dinero");
+								}
+							break;
+							case 3:
+							break;
+							default:
+						
+						}
+					}
 				break;
+				//Salir
 				case 4:
 					escritor.escribir("Gracias por jugar. ¡Hasta la próxima!");
 					jugar = false;
