@@ -44,7 +44,7 @@ public class Tienda {
 		}
 			
 	}
-
+      //prueba 1 git
 	public void compraPocionIntercambio() {
 		if(cantidadIntercambio<= 0) {
 			escritor.escribir("No quedan posicines de intercambio");
