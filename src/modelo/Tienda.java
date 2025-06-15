@@ -44,7 +44,7 @@ public class Tienda {
 		}
 			
 	}
-	//comprar posion
+
 	public void compraPocionIntercambio() {
 		if(cantidadIntercambio<= 0) {
 			escritor.escribir("No quedan posicines de intercambio");
