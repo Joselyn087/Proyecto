@@ -27,7 +27,7 @@ public class Tienda {
 	
 	public void compraPocionVitalidad() {
 		if(cantidadVitalidad<= 0) {
-			escritor.escribir("No quedan posicines de vitalidad");
+			escritor.escribir("No quedan posiones de vitalidad");
 		
 		}else if(protagonista.getDinero() < precioVitalidad) {
 			escritor.escribir("No tienes suficiente dinero");
@@ -35,16 +35,15 @@ public class Tienda {
 		}else{
 			protagonista.setDinero(protagonista.getDinero() - precioVitalidad);
 		
-			//por aqui esta el error
 			int aumentoVitalidad = azarVitalidad.numeroAzar();
-			protagonista.setVitalidad(protagonista.getVitalidad() + aumentoVitalidad);
+			int nuevaVitalidad = (protagonista.getVitalidad() + aumentoVitalidad);
 		
+			protagonista.setVitalidad(nuevaVitalidad);
 			cantidadVitalidad--;
-			escritor.escribir("Has comprado una poción de vitalidad.");
+			escritor.escribir("Has comprado una poción de vitalidad.(+"+ aumentoVitalidad + "vitalidad)");
 		}
 			
 	}
-      //prueba 1 git
 	public void compraPocionIntercambio() {
 		if(cantidadIntercambio<= 0) {
 			escritor.escribir("No quedan posicines de intercambio");
