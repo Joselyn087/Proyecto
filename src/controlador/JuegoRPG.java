@@ -29,7 +29,7 @@ public class JuegoRPG {
 		enemigo = new Enemigo();
 		lector = new Lector();
 		escritor = new Escritor();
-		tienda = new Tienda();
+		tienda = new Tienda(protagonista, escritor, enemigo);
 		
 		String nombreProtagonista = protagonista.nombreProtaginista();
 		String nombreEnemigoTierra = enemigo.nombreEnemigosTierra();
@@ -141,14 +141,13 @@ public class JuegoRPG {
 							+ "nómada. ‘Solo vendo a los que tienen valor... y monedas’, dice mientras ríe con\r\n"
 							+ "dientes dorados.”");
 						int opcionCompra = lector.leerInt("Bienvenido a la tienda \n Su dinero es " + protagonista.getDinero() 
-						+ "\n1. Comprar poción de vitalidad (10 monedas) \n2. Comprar poción de intercambio (30 monedas)");
+						+ "\n1. Comprar poción de vitalidad (10 monedas) \n2. Comprar poción de intercambio (30 monedas) \n3. Regresar");
 						
 						switch(opcionCompra) {
 							case 1:
 								//no se esta suma la vitalidad de la posion cuando se compra
 								if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
 									tienda.compraPocionVitalidad();
-									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioVitalidad());
 									protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
 									
 									escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
@@ -168,6 +167,7 @@ public class JuegoRPG {
 								}
 							break;
 							case 3:
+								entrarTienda = false;
 							break;
 							default:
 						

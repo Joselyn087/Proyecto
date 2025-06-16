@@ -8,20 +8,20 @@ public class Tienda {
 	private int cantidadVitalidad;
 	private int cantidadIntercambio;
 	RuedaDelDestino azarVitalidad;
-	Protagonista protagonista;
-	Escritor escritor;
-	Enemigo enemigo;
+	private Protagonista protagonista;
+	private Escritor escritor;
+	private Enemigo enemigo;
 	
 	
-	public Tienda() {
+	public Tienda(Protagonista protagonista, Escritor escritor, Enemigo enemigo) {
 		precioVitalidad = 10;
 		precioIntercambio = 20;
 		cantidadIntercambio = 2;
 		azarVitalidad = new RuedaDelDestino(10,40);
-		protagonista = new Protagonista();
+		this.protagonista = protagonista;
 		cantidadVitalidad = 2;
-		escritor = new Escritor();
-		enemigo = new Enemigo();
+		this.escritor = escritor;
+		this.enemigo = enemigo;
 		
 	}
 	
@@ -36,7 +36,8 @@ public class Tienda {
 			protagonista.setDinero(protagonista.getDinero() - precioVitalidad);
 		
 			int aumentoVitalidad = azarVitalidad.numeroAzar();
-			int nuevaVitalidad = (protagonista.getVitalidad() + aumentoVitalidad);
+			int vitalidadJugador = protagonista.getVitalidad();
+			int nuevaVitalidad = (vitalidadJugador + aumentoVitalidad);
 		
 			protagonista.setVitalidad(nuevaVitalidad);
 			cantidadVitalidad--;
@@ -47,10 +48,12 @@ public class Tienda {
 	public void compraPocionIntercambio() {
 		if(cantidadIntercambio<= 0) {
 			escritor.escribir("No quedan posicines de intercambio");
+			return;
 		}
 		
 		if(protagonista.getDinero() < precioIntercambio) {
 			escritor.escribir("No tienes suficiente dinero");
+			return;
 		}
 		
 		protagonista.setDinero(protagonista.getDinero() - precioIntercambio);
