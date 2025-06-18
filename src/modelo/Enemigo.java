@@ -1,54 +1,83 @@
 package modelo;
 
+import vista.joption.Escritor;
+
 public class Enemigo {
 	private String nombre;
-	private int vitalidad;
+	private int vitalidadMaxima;
 	private int danoAtaque;
 	private String nombreAtaque;
 	RuedaDelDestino azarNombre;
+	Escritor escritor;
 	
 	public Enemigo() {
 		nombre = "";
-		vitalidad = 100;
+		vitalidadMaxima = 100;
 		danoAtaque = 0;
 		nombreAtaque = "";
 		azarNombre = new RuedaDelDestino(1, 3);
+		escritor = new Escritor();
 	}
 
-public String nombreEnemigosTierra() {
+	public void generarEnemigoTierra() {
 		
-		if(azarNombre.numeroAzar() == 1) {
-			nombre = "El Sombrío";
-		}else if(azarNombre.numeroAzar() == 2) {
-			nombre = "El Profeta Olvidado";
-			
-		}else {
-			nombre = "La Sombra Errante";
+		switch(azarNombre.numeroAzar()) {
+			case 1:
+				nombre = "El Sombrío";	
+				vitalidadMaxima = 30;
+				danoAtaque = 18;
+				nombreAtaque = "Aplastamiento";
+				break;
+			case 2:
+				nombre = "El Profeta Olvidado";
+				vitalidadMaxima = 40;
+				danoAtaque = 20;
+				nombreAtaque = "Golpe de garrote";
+				break;
+			case 3:
+				nombre = "La Sombra Errante";
+				vitalidadMaxima = 50;
+				danoAtaque = 30;
+				nombreAtaque = "Estocada veloz";
+				break;
+		
 		}
-		return nombre;
-		
+		escritor.escribir(nombre + " usa " + nombreAtaque + ", tiene " + vitalidadMaxima + " de vitalidad y causa " + danoAtaque + " de daño.");
 	}
+	
 
-public String nombreEnemigosMar() {
+	public void generarEnemigosMar() {
+		switch(azarNombre.numeroAzar()) {
+		case 1:
+			nombre = "Sombra Eterna";	
+			vitalidadMaxima = 30;
+			danoAtaque = 18;
+			nombreAtaque = "Tentáculo aplastante";
+		break;
+		case 2:
+			nombre = "La Bestia del Abismo";
+			vitalidadMaxima = 40;
+			danoAtaque = 20;
+			nombreAtaque = "Disparo maldito";
+			break;
+		case 3:
+			nombre = "Lord Chiflón";
+			vitalidadMaxima = 50;
+			danoAtaque = 30;
+			nombreAtaque = "Canto mortal";
+		break;
 	
-	if(azarNombre.numeroAzar() == 1) {
-		nombre = "Sombra Eterna";
-	}else if(azarNombre.numeroAzar() == 2) {
-		nombre = "Lord Chiflón";
-		
-	}else {
-		nombre = "La Bestia del Abismo";
+		}	
+		escritor.escribir(nombre + " usa " + nombreAtaque + ", tiene " + vitalidadMaxima + " de vitalidad y causa " + danoAtaque + " de daño.");
+	
 	}
-	return nombre;
-	
-}
 
 	public int getVitalidad() {
-		return vitalidad;
+		return vitalidadMaxima;
 	}
 
 	public void setVitalidad(int vitalidad) {
-		this.vitalidad = vitalidad;
+		this.vitalidadMaxima = vitalidad;
 	}
 
 	public int getDanoAtaque() {
@@ -65,6 +94,14 @@ public String nombreEnemigosMar() {
 
 	public void setNombreAtaque(String nombreAtaque) {
 		this.nombreAtaque = nombreAtaque;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 
