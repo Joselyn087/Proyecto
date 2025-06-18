@@ -47,8 +47,13 @@ public class Tienda {
 	}
 	public void compraPocionIntercambio() {
 		if(cantidadIntercambio<= 0) {
+
 			escritor.escribir("No quedan posiones de intercambio");
 			
+
+			escritor.escribir("No quedan posicines de intercambio");
+			return;
+
 		}else if(protagonista.getDinero() < precioIntercambio) {
 			escritor.escribir("No tienes suficiente dinero");
 			
@@ -64,8 +69,25 @@ public class Tienda {
 		    escritor.escribir("Ahora tu vitalidad es: " + protagonista.getVitalidad() +
 		                      "\nLa vitalidad del enemigo es: " + enemigo.getVitalidad());
 		}
-			
+
+		
+		protagonista.setDinero(protagonista.getDinero() - precioIntercambio);
+		
+		int temporal = protagonista.getVitalidad();
+		if(temporal > 0) {
+	    	enemigo.setVitalidad(temporal);
+		   protagonista.setVitalidad(0);
+		
+	
+		cantidadIntercambio--;
+		escritor.escribir("Has intercambiado tu vitalidad con el enemigo");
+		
+	  }else 
+		escritor.escribir("no tienes vitalidad para intercambiar");
+		protagonista.setDinero(protagonista.getDinero() + precioIntercambio);
+
 	}
+
 	
 	
 
