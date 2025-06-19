@@ -43,6 +43,7 @@ public class JuegoRPG {
 			switch(opcionMenu) {
 				// explorar
 				case 1:
+					
 					int opcionLugar = lector.leerInt("Selecciona un lugar \n1.Tierra \n2.Mar");
 					
 					switch(opcionLugar) {
@@ -52,10 +53,11 @@ public class JuegoRPG {
 									+ "olvidados. De pronto, una figura emerge entre el polvo…”");
 							
 							boolean lucharTierra = true;
+							enemigo.generarEnemigoTierra();
 							while(lucharTierra) {
 								
 								
-								int accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda \n4. Salir");
+								int accion = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda \n4. Regresar");
 								switch(accion) {
 									//Luchar
 									case 1:
@@ -150,7 +152,7 @@ public class JuegoRPG {
 							while(lucharMar) {
 								
 								
-								int accionMar = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda \n4. Salir");
+								int accionMar = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda \n4. Regresar");
 								switch(accionMar) {
 									//Luchar
 									case 1:
@@ -228,7 +230,7 @@ public class JuegoRPG {
 										}
 									break;
 									case 4:
-										lucharTierra = false;
+										lucharMar = false;
 									break;
 									default:
 										escritor.escribir("Digite una opcion valida");
