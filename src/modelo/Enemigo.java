@@ -12,7 +12,7 @@ public class Enemigo {
 	
 	public Enemigo() {
 		nombre = "";
-		vitalidadMaxima = 100;
+		vitalidadMaxima = 0;
 		danoAtaque = 0;
 		nombreAtaque = "";
 		azarNombre = new RuedaDelDestino(1, 3);
@@ -24,19 +24,19 @@ public class Enemigo {
 		switch(azarNombre.numeroAzar()) {
 			case 1:
 				nombre = "El Sombrío";	
-				vitalidadMaxima = 30;
+				vitalidadMaxima = 130;
 				danoAtaque = 18;
 				nombreAtaque = "Aplastamiento";
 				break;
 			case 2:
 				nombre = "El Profeta Olvidado";
-				vitalidadMaxima = 40;
+				vitalidadMaxima = 140;
 				danoAtaque = 20;
 				nombreAtaque = "Golpe de garrote";
 				break;
 			case 3:
 				nombre = "La Sombra Errante";
-				vitalidadMaxima = 50;
+				vitalidadMaxima = 150;
 				danoAtaque = 30;
 				nombreAtaque = "Estocada veloz";
 				break;
@@ -50,19 +50,19 @@ public class Enemigo {
 		switch(azarNombre.numeroAzar()) {
 		case 1:
 			nombre = "Sombra Eterna";	
-			vitalidadMaxima = 30;
+			vitalidadMaxima = 130;
 			danoAtaque = 18;
 			nombreAtaque = "Tentáculo aplastante";
 		break;
 		case 2:
 			nombre = "La Bestia del Abismo";
-			vitalidadMaxima = 40;
+			vitalidadMaxima = 140;
 			danoAtaque = 20;
 			nombreAtaque = "Disparo maldito";
 			break;
 		case 3:
 			nombre = "Lord Chiflón";
-			vitalidadMaxima = 50;
+			vitalidadMaxima = 150;
 			danoAtaque = 30;
 			nombreAtaque = "Canto mortal";
 		break;

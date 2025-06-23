@@ -29,6 +29,8 @@ public class JuegoRPG {
 		tienda = new Tienda(protagonista, escritor, enemigo);
 		
 		String nombreProtagonista = protagonista.nombreProtaginista();
+		
+		
 		boolean jugar = true;
 		while(jugar){
 			escritor.escribir("Las posibilidades son múltiples; algunas elecciones son sencillas, otras sensatas, unas temerarias... \n"
@@ -38,6 +40,14 @@ public class JuegoRPG {
 						+ "posibles. Elige tu propia aventura");
 			
 			escritor.escribir("El heroe con el que jugaras el dia de hoy se llama " + nombreProtagonista);
+			if(protagonista.getVictorias() == 5) {
+				escritor.escribir( "“Tu nombre empieza a escucharse en las aldeas."
+						+ " Eres conocido como El Errante, portador de la voluntad de Lyvaria.”");
+			}else if(protagonista.getDerrotas() == 5) {
+				escritor.escribir( "“Te debilitas. Las criaturas del caos sienten tu flaqueza... pero la historia aún no ha terminado.”");
+			}else {
+				
+			}
 			
 			opcionMenu = lector.leerInt("1. Explorar \n2.Estado \n3.Tienda \n4.Salir");
 			switch(opcionMenu) {
@@ -62,7 +72,6 @@ public class JuegoRPG {
 									//Luchar
 									case 1:
 										while(protagonista.getVitalidad() > 0 && enemigo.getVitalidad() > 0) {
-											
 											//ataque protagonista
 											enemigo.setVitalidad(enemigo.getVitalidad()- protagonista.getDanoAtaque());
 											escritor.escribir("¡Atacas al enemigo! Vitalidad del enemigo: " + enemigo.getVitalidad());
@@ -71,8 +80,10 @@ public class JuegoRPG {
 												escritor.escribir("¡Has derrotado al enemigo!");
 												protagonista.setVictorias(protagonista.getVictorias() + 1);
 												protagonista.setDinero(protagonista.getDinero() + 50);
+												lucharTierra = false;
 												break;
 											}
+											
 											
 											//ataque enemigo
 											protagonista.setVitalidad(protagonista.getVitalidad() - enemigo.getDanoAtaque());
@@ -81,6 +92,14 @@ public class JuegoRPG {
 									        if (protagonista.getVitalidad() <= 0) {
 									            escritor.escribir("¡Has sido derrotado!");
 									            protagonista.setDerrotas(protagonista.getDerrotas() + 1);
+									            lucharTierra = false;
+									            
+									            
+									            
+									            
+									            
+									            
+									            
 									            break;
 									        }
 
@@ -128,6 +147,7 @@ public class JuegoRPG {
 												break;
 												case 3:
 													entrarTienda1 = false;
+													lucharTierra = true;
 												break;
 												default:
 											
@@ -153,9 +173,12 @@ public class JuegoRPG {
 								
 								
 								int accionMar = lector.leerInt("¿Qué deseas hacer? \n1. Luchar \n2. Correr \n3. Ir a la tienda \n4. Regresar");
+								
 								switch(accionMar) {
 									//Luchar
+								
 									case 1:
+										
 										while(protagonista.getVitalidad() > 0 && enemigo.getVitalidad() > 0) {
 											
 											//ataque protagonista
@@ -166,7 +189,9 @@ public class JuegoRPG {
 												escritor.escribir("¡Has derrotado al enemigo!");
 												protagonista.setVictorias(protagonista.getVictorias() + 1);
 												protagonista.setDinero(protagonista.getDinero() + 50);
+												lucharMar = false;
 												break;
+												
 											}
 											
 											//ataque enemigo
@@ -176,10 +201,14 @@ public class JuegoRPG {
 									        if (protagonista.getVitalidad() <= 0) {
 									            escritor.escribir("¡Has sido derrotado!");
 									            protagonista.setDerrotas(protagonista.getDerrotas() + 1);
+									            lucharMar = false;
 									            break;
 									        }
+									        escritor.escribir("La vitalidad de " + nombreProtagonista + " es " + protagonista.getVitalidad());
+									        
+									        lucharMar = false;
 
-											
+									     
 										}
 									break;
 									//Correr
@@ -259,7 +288,7 @@ public class JuegoRPG {
 						
 						switch(opcionCompra) {
 							case 1:
-								//no se esta suma la vitalidad de la posion cuando se compra
+								//Comprar posion vitalidad
 								if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
 									tienda.compraPocionVitalidad();
 									protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
@@ -297,7 +326,17 @@ public class JuegoRPG {
 				default:
 					escritor.escribir("Digite una opcion valida");
 			}
+		if(protagonista.getVictorias() == 10) {
+			escritor.escribir(" “Has derrotado a los guardianes de la Tierra y el Mar. El velo entre los elementos \r\n"
+					+ "se ha restaurado. Pero nuevos rumores surgen… Esta historia apenas comienza.”");
+		}
+		
+		
 		}
 	}
+	
+	
+	
+	
 	
 }

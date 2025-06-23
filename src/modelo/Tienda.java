@@ -1,5 +1,4 @@
 package modelo;
-
 import vista.joption.Escritor;
 
 public class Tienda {
@@ -16,7 +15,7 @@ public class Tienda {
 	public Tienda(Protagonista protagonista, Escritor escritor, Enemigo enemigo) {
 		precioVitalidad = 10;
 		precioIntercambio = 20;
-		cantidadIntercambio = 2;
+		cantidadIntercambio = 3;
 		azarVitalidad = new RuedaDelDestino(10,40);
 		this.protagonista = protagonista;
 		cantidadVitalidad = 2;
@@ -57,9 +56,12 @@ public class Tienda {
 		}else if(protagonista.getDinero() < precioIntercambio) {
 			escritor.escribir("No tienes suficiente dinero");
 			
+		}else if (protagonista.getVitalidad() <= 0){
+			escritor.escribir("no tienes vitalidad para intercambiar");
+			
 		}else {
 			protagonista.setDinero(protagonista.getDinero() - precioIntercambio);
-		
+			
 			int temporal = protagonista.getVitalidad();
 			protagonista.setVitalidad(enemigo.getVitalidad());
 			enemigo.setVitalidad(temporal);
@@ -73,19 +75,8 @@ public class Tienda {
 		
 		protagonista.setDinero(protagonista.getDinero() - precioIntercambio);
 		
-		int temporal = protagonista.getVitalidad();
-		if(temporal > 0) {
-	    	enemigo.setVitalidad(temporal);
-		   protagonista.setVitalidad(0);
-		
-	
-		cantidadIntercambio--;
 		escritor.escribir("Has intercambiado tu vitalidad con el enemigo");
 		
-	  }else 
-		escritor.escribir("no tienes vitalidad para intercambiar");
-		protagonista.setDinero(protagonista.getDinero() + precioIntercambio);
-
 	}
 
 	
