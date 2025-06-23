@@ -2,6 +2,7 @@ package controlador;
 
 import modelo.Enemigo;
 import modelo.Protagonista;
+import modelo.RuedaDelDestino;
 import modelo.Tienda;
 import vista.joption.Escritor;
 import vista.joption.Lector;
@@ -15,20 +16,29 @@ public class JuegoRPG {
 	}
 		
 	public void iniciarJuego(){
-		Protagonista protagonista;
-		Enemigo enemigo;
-		Lector lector;
-		Escritor escritor;
-		Tienda tienda;
+		Protagonista protagonista = new Protagonista();;
+		Enemigo enemigo = new Enemigo();;
+		Lector lector = new Lector();;
+		Escritor escritor = new Escritor();;
+		Tienda tienda = new Tienda();;
+		RuedaDelDestino rueda = new RuedaDelDestino();
 		int opcionMenu;
 		
-		protagonista = new Protagonista();
-		enemigo = new Enemigo();
-		lector = new Lector();
-		escritor = new Escritor();
-		tienda = new Tienda(protagonista, escritor, enemigo);
-		
-		String nombreProtagonista = protagonista.nombreProtaginista();
+		switch(rueda.girar(1, 3)) {
+		case 1:
+			protagonista.setNombre("Artur");
+			
+		break;
+		case 2:
+			protagonista.setNombre("Diana");
+			
+		break;
+		case 3:
+			protagonista.setNombre("Petra");
+			
+		break;
+	}
+		protagonista.setVitalidad(rueda.girar(80, 100));
 		
 		
 		boolean jugar = true;
@@ -39,7 +49,8 @@ public class JuegoRPG {
 						+ "imprudente, vuelve al principio y empieza de nuevo. No hay opciones acertadas o erróneas, sino muchas elecciones \n"
 						+ "posibles. Elige tu propia aventura");
 			
-			escritor.escribir("El heroe con el que jugaras el dia de hoy se llama " + nombreProtagonista);
+			
+			escritor.escribir("El heroe con el que jugaras el dia de hoy se llama " + protagonista.getNombre());
 			if(protagonista.getVictorias() == 5) {
 				escritor.escribir( "“Tu nombre empieza a escucharse en las aldeas."
 						+ " Eres conocido como El Errante, portador de la voluntad de Lyvaria.”");
@@ -63,7 +74,28 @@ public class JuegoRPG {
 									+ "olvidados. De pronto, una figura emerge entre el polvo…”");
 							
 							boolean lucharTierra = true;
-							enemigo.generarEnemigoTierra();
+							switch(rueda.girar(1,3)) {
+							case 1:
+								enemigo.setNombre("El Sombrío");	
+								enemigo.setVitalidad(90);
+								enemigo.setDanoAtaque(20);
+								enemigo.setNombreAtaque("Aplastamiento");
+								break;
+							case 2:
+								enemigo.setNombre("El Profeta Olvidado");
+								enemigo.setVitalidad(100);
+								enemigo.setDanoAtaque(40);
+								enemigo.setNombreAtaque("Golpe de garrote");
+							break;
+							case 3:
+								enemigo.setNombre("La Sombra Errante");
+								enemigo.setVitalidad(110);
+								enemigo.setDanoAtaque(50);
+								enemigo.setNombreAtaque("Estocada veloz");
+							break;
+					
+						}
+							escritor.escribir(enemigo.getNombre() + " usa " + enemigo.getNombreAtaque() + ", tiene " + enemigo.getVitalidad() + " de vitalidad y causa " + enemigo.getDanoAtaque() + " de daño.");
 							while(lucharTierra) {
 								
 								
@@ -79,7 +111,7 @@ public class JuegoRPG {
 											if(enemigo.getVitalidad() <= 0) {
 												escritor.escribir("¡Has derrotado al enemigo!");
 												protagonista.setVictorias(protagonista.getVictorias() + 1);
-												protagonista.setDinero(protagonista.getDinero() + 50);
+												protagonista.setDinero(protagonista.getDinero() + 20);
 												lucharTierra = false;
 												break;
 											}
@@ -93,17 +125,8 @@ public class JuegoRPG {
 									            escritor.escribir("¡Has sido derrotado!");
 									            protagonista.setDerrotas(protagonista.getDerrotas() + 1);
 									            lucharTierra = false;
-									            
-									            
-									            
-									            
-									            
-									            
-									            
 									            break;
 									        }
-
-											
 										}
 									break;
 									//Correr
@@ -113,8 +136,8 @@ public class JuegoRPG {
 									break;
 									//ir a la tienda
 									case 3:
-										boolean entrarTienda1 = true;
-										while(entrarTienda1) {
+										boolean entrarTiendaTierra = true;
+										while(entrarTiendaTierra) {
 											escritor.escribir("“Encuentras una carreta abandonada convertida en tienda por un mercader\r\n"
 												+ "nómada. ‘Solo vendo a los que tienen valor... y monedas’, dice mientras ríe con\r\n"
 												+ "dientes dorados.”");
@@ -122,34 +145,79 @@ public class JuegoRPG {
 											+ "\n1. Comprar poción de vitalidad (10 monedas) \n2. Comprar poción de intercambio (30 monedas) \n3. Regresar");
 											
 											switch(opcionCompra1) {
-												case 1:
-													//no se esta suma la vitalidad de la posion cuando se compra
-													if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
-														tienda.compraPocionVitalidad();
-														protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
-														
-														escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
-													}else {
+											case 1:
+												
+												if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
+													if(tienda.getCantidadVitalidad()<= 0) {
+														escritor.escribir("No quedan posiones de vitalidad");
+													
+													}else if(protagonista.getDinero() < tienda.getPrecioVitalidad()) {
 														escritor.escribir("No tienes suficiente dinero");
+													
+													}else{
+														protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioVitalidad());
+													
+														int aumentoVitalidad = rueda.girar(40,80);
+														int vitalidadJugador = protagonista.getVitalidad();
+														int nuevaVitalidad = (vitalidadJugador + aumentoVitalidad);
+													
+														protagonista.setVitalidad(nuevaVitalidad);
+														tienda.setCantidadVitalidad(tienda.getCantidadVitalidad() -1);
+														escritor.escribir("Has comprado una poción de vitalidad.(+"+ aumentoVitalidad + "vitalidad)");
 													}
+													protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
 													
-												break;
-												case 2:
-													//Comprar posion intercambio
-													
-													if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
-														tienda.compraPocionIntercambio();
-														protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
-														protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
+													escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
+												}else {
+													escritor.escribir("No tienes suficiente dinero");
+												}
+												
+											break;
+											case 2:
+												//Comprar posion intercambio
+												
+												if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
+													if(tienda.getCantidadIntercambio()<= 0) {
+
+														escritor.escribir("No quedan posiones de intercambio");
+														
+
+														return;
+
+													}else if(protagonista.getDinero() < tienda.getPrecioIntercambio()) {
+														escritor.escribir("No tienes suficiente dinero");
+														
+													}else if (protagonista.getVitalidad() <= 0){
+														escritor.escribir("no tienes vitalidad para intercambiar");
+														
+													}else if(enemigo.getVitalidad() <= 0) {
+														escritor.escribir("La vitalidad del el enemigo es " + enemigo.getVitalidad() + ", no puedes comprar posion de intercambio");
+														
 													}else {
-														escritor.escribir("No tienes suficinte dinero");
+														protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+														
+														int temporal = protagonista.getVitalidad();
+														protagonista.setVitalidad(enemigo.getVitalidad());
+														enemigo.setVitalidad(temporal);
+												
+														tienda.setCantidadIntercambio(tienda.getCantidadIntercambio() - 1);
+														escritor.escribir("Has usado una poción de intercambio.");
+													    escritor.escribir("Ahora tu vitalidad es: " + protagonista.getVitalidad() +
+													                      "\nLa vitalidad del enemigo es: " + enemigo.getVitalidad());
+													    
+														
+														escritor.escribir("Has intercambiado tu vitalidad con el enemigo");
 													}
-												break;
-												case 3:
-													entrarTienda1 = false;
-													lucharTierra = true;
-												break;
-												default:
+													protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+													protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
+												}else {
+													escritor.escribir("No tienes suficinte dinero");
+												}
+											break;
+											case 3:
+												entrarTiendaTierra = false;
+											break;
+											default:
 											
 											}
 										}
@@ -168,7 +236,29 @@ public class JuegoRPG {
 							escritor.escribir("“Surcas las costas escarpadas, donde las olas rompen con furia. De las\r\n"
 									+ "aguas oscuras asciende una criatura ancestral…”");
 							boolean lucharMar = true;
-							enemigo.generarEnemigosMar();
+							switch(rueda.girar(1,3)) {
+								case 1:
+									enemigo.setNombre("Sombra Eterna");	
+									enemigo.setVitalidad(90);
+									enemigo.setDanoAtaque(20);
+									enemigo.setNombreAtaque("Tentáculo aplastante");
+									break;
+								case 2:
+									enemigo.setNombre("La Bestia del Abismo");
+									enemigo.setVitalidad(100);
+									enemigo.setDanoAtaque(40);
+									enemigo.setNombreAtaque("Disparo maldito");
+								break;
+								case 3:
+									enemigo.setNombre("Lord Chiflón");
+									enemigo.setVitalidad(110);
+									enemigo.setDanoAtaque(50);
+									enemigo.setNombreAtaque("Canto mortal");
+									break;
+						
+							}	
+							escritor.escribir(enemigo.getNombre() + " usa " + enemigo.getNombreAtaque() + ", tiene " + enemigo.getVitalidad() + " de vitalidad y causa " + enemigo.getDanoAtaque() + " de daño.");
+						
 							while(lucharMar) {
 								
 								
@@ -188,7 +278,7 @@ public class JuegoRPG {
 											if(enemigo.getVitalidad() <= 0) {
 												escritor.escribir("¡Has derrotado al enemigo!");
 												protagonista.setVictorias(protagonista.getVictorias() + 1);
-												protagonista.setDinero(protagonista.getDinero() + 50);
+												protagonista.setDinero(protagonista.getDinero() + 20);
 												lucharMar = false;
 												break;
 												
@@ -204,7 +294,7 @@ public class JuegoRPG {
 									            lucharMar = false;
 									            break;
 									        }
-									        escritor.escribir("La vitalidad de " + nombreProtagonista + " es " + protagonista.getVitalidad());
+									        escritor.escribir("La vitalidad de " + protagonista.getNombre() + " es " + protagonista.getVitalidad());
 									        
 									        lucharMar = false;
 
@@ -228,9 +318,25 @@ public class JuegoRPG {
 											
 											switch(opcionCompraMar) {
 												case 1:
-													//no se esta suma la vitalidad de la posion cuando se compra
+													
 													if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
-														tienda.compraPocionVitalidad();
+														if(tienda.getCantidadVitalidad()<= 0) {
+															escritor.escribir("No quedan posiones de vitalidad");
+														
+														}else if(protagonista.getDinero() < tienda.getPrecioVitalidad()) {
+															escritor.escribir("No tienes suficiente dinero");
+														
+														}else{
+															protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioVitalidad());
+														
+															int aumentoVitalidad = rueda.girar(40,80);
+															int vitalidadJugador = protagonista.getVitalidad();
+															int nuevaVitalidad = (vitalidadJugador + aumentoVitalidad);
+														
+															protagonista.setVitalidad(nuevaVitalidad);
+															tienda.setCantidadVitalidad(tienda.getCantidadVitalidad() -1);
+															escritor.escribir("Has comprado una poción de vitalidad.(+"+ aumentoVitalidad + "vitalidad)");
+														}
 														protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
 														
 														escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
@@ -243,7 +349,37 @@ public class JuegoRPG {
 													//Comprar posion intercambio
 													
 													if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
-														tienda.compraPocionIntercambio();
+														if(tienda.getCantidadIntercambio()<= 0) {
+
+															escritor.escribir("No quedan posiones de intercambio");
+															
+
+															return;
+
+														}else if(protagonista.getDinero() < tienda.getPrecioIntercambio()) {
+															escritor.escribir("No tienes suficiente dinero");
+															
+														}else if (protagonista.getVitalidad() <= 0){
+															escritor.escribir("no tienes vitalidad para intercambiar");
+															
+														}else if(enemigo.getVitalidad() <= 0) {
+															escritor.escribir("La vitalidad del el enemigo es " + enemigo.getVitalidad() + ", no puedes comprar posion de intercambio");
+															
+														}else {
+															protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+															
+															int temporal = protagonista.getVitalidad();
+															protagonista.setVitalidad(enemigo.getVitalidad());
+															enemigo.setVitalidad(temporal);
+													
+															tienda.setCantidadIntercambio(tienda.getCantidadIntercambio() - 1);
+															escritor.escribir("Has usado una poción de intercambio.");
+														    escritor.escribir("Ahora tu vitalidad es: " + protagonista.getVitalidad() +
+														                      "\nLa vitalidad del enemigo es: " + enemigo.getVitalidad());
+														    
+															
+															escritor.escribir("Has intercambiado tu vitalidad con el enemigo");
+														}
 														protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
 														protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
 													}else {
@@ -270,7 +406,7 @@ public class JuegoRPG {
 					}
 				//Explorar
 				case 2:
-					escritor.escribir("\nESTADO DEL PROTAGONISTA" + "\nNombre: " + nombreProtagonista + "\nVitalidad: " + protagonista.getVitalidad() + "\nDaño de Ataque: " + protagonista.getDanoAtaque() + "\nDinero: " + protagonista.getDinero()
+					escritor.escribir("\nESTADO DEL PROTAGONISTA" + "\nNombre: " + protagonista.getNombre() + "\nVitalidad: " + protagonista.getVitalidad() + "\nDaño de Ataque: " + protagonista.getDanoAtaque() + "\nDinero: " + protagonista.getDinero()
 			     	+ "\nVictorias: " + protagonista.getVictorias() + "\nDerrotas: " + protagonista.getDerrotas()
 			        + "\nPociones de Vitalidad: " + protagonista.getPocionVitalidad()
 			        + "\nPociones de Intercambio: " + protagonista.getPocionIntercambio());
@@ -287,32 +423,79 @@ public class JuegoRPG {
 						+ "\n1. Comprar poción de vitalidad (10 monedas) \n2. Comprar poción de intercambio (30 monedas) \n3. Regresar");
 						
 						switch(opcionCompra) {
-							case 1:
-								//Comprar posion vitalidad
-								if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
-									tienda.compraPocionVitalidad();
-									protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
-									
-									escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
-								}else {
-									escritor.escribir("No tienes suficiente dinero");
-								}
+						case 1:
+							
+							if(protagonista.getDinero()>= tienda.getPrecioVitalidad()) {
+								if(tienda.getCantidadVitalidad()<= 0) {
+									escritor.escribir("No quedan posiones de vitalidad");
 								
-							break;
-							case 2:
-								//Comprar posion intercambio
-								if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
-									tienda.compraPocionIntercambio();
-									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
-									protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
-								}else {
-									escritor.escribir("No tienes suficinte dinero");
+								}else if(protagonista.getDinero() < tienda.getPrecioVitalidad()) {
+									escritor.escribir("No tienes suficiente dinero");
+								
+								}else{
+									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioVitalidad());
+								
+									int aumentoVitalidad = rueda.girar(40,80);
+									int vitalidadJugador = protagonista.getVitalidad();
+									int nuevaVitalidad = (vitalidadJugador + aumentoVitalidad);
+								
+									protagonista.setVitalidad(nuevaVitalidad);
+									tienda.setCantidadVitalidad(tienda.getCantidadVitalidad() -1);
+									escritor.escribir("Has comprado una poción de vitalidad.(+"+ aumentoVitalidad + "vitalidad)");
 								}
-							break;
-							case 3:
-								entrarTienda = false;
-							break;
-							default:
+								protagonista.setPocionVitalidad(protagonista.getPocionVitalidad() + 1);
+								
+								escritor.escribir("vitalidad " + protagonista.getVitalidad() + "dinero " + protagonista.getDinero());
+							}else {
+								escritor.escribir("No tienes suficiente dinero");
+							}
+							
+						break;
+						case 2:
+							//Comprar posion intercambio
+							
+							if(protagonista.getDinero() >= tienda.getPrecioIntercambio()) {
+								if(tienda.getCantidadIntercambio()<= 0) {
+
+									escritor.escribir("No quedan posiones de intercambio");
+									
+
+									return;
+
+								}else if(protagonista.getDinero() < tienda.getPrecioIntercambio()) {
+									escritor.escribir("No tienes suficiente dinero");
+									
+								}else if (protagonista.getVitalidad() <= 0){
+									escritor.escribir("No tienes vitalidad para intercambiar");
+									
+								}else if(enemigo.getVitalidad() <= 0) {
+									escritor.escribir("La vitalidad del el enemigo es " + enemigo.getVitalidad() + ", no puedes comprar posion de intercambio");
+									
+								}else {
+									protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+									
+									int temporal = protagonista.getVitalidad();
+									protagonista.setVitalidad(enemigo.getVitalidad());
+									enemigo.setVitalidad(temporal);
+							
+									tienda.setCantidadIntercambio(tienda.getCantidadIntercambio() - 1);
+									escritor.escribir("Has usado una poción de intercambio.");
+								    escritor.escribir("Ahora tu vitalidad es: " + protagonista.getVitalidad() +
+								                      "\nLa vitalidad del enemigo es: " + enemigo.getVitalidad());
+								    
+									
+									escritor.escribir("Has intercambiado tu vitalidad con el enemigo");
+								}
+								protagonista.setDinero(protagonista.getDinero() - tienda.getPrecioIntercambio());
+								protagonista.setPocionIntercambio(protagonista.getPocionIntercambio() + 1);
+							}else {
+								escritor.escribir("No tienes suficinte dinero");
+							}
+						break;
+						case 3:
+							entrarTienda = false;
+						break;
+						default:
 						
 						}
 					}
@@ -333,6 +516,8 @@ public class JuegoRPG {
 		
 		
 		}
+		
+			
 	}
 	
 	

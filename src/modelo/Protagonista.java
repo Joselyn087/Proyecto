@@ -14,14 +14,12 @@ public class Protagonista {
 	private int dinero;
 	private int victorias;
 	private int derrotas;
-	RuedaDelDestino azarNombre;
-	RuedaDelDestino azarVitalidad;
 	
 	public Protagonista() {
 
-		azarVitalidad = new RuedaDelDestino(80, 100);
+		
 		nombre = "";
-		vitalidad = azarVitalidad.numeroAzar();;
+		vitalidad = 0;
 		danoAtaque = 50;
 		nombreAtaque = "";
 		pocionVitalidad = 0;
@@ -29,25 +27,18 @@ public class Protagonista {
 		dinero = 100;
 		victorias = 0;
 		derrotas = 0;
-		azarNombre = new RuedaDelDestino(1, 3);
+		
 		
 	}
-	public String nombreProtaginista() {
-		
-		if(azarNombre.numeroAzar() == 1) {
-			nombre = "Artur";
-		}else if(azarNombre.numeroAzar() == 2) {
-			nombre = "Diana";
-			
-		}else {
-			nombre = "Petra";
-		}
-		return nombre;
-		
-	}
-	
-	
 
+	
+	
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 	public int getDanoAtaque() {
 		return danoAtaque;
 	}

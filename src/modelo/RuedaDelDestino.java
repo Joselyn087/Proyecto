@@ -7,13 +7,14 @@ public class RuedaDelDestino {
 		
 		
 		//Inicializar
-	public RuedaDelDestino(int minimo, int maximo) {
-		this.maximo = maximo;
-		this.minimo = minimo;
+	public RuedaDelDestino() {
+		this.maximo = 0;
+		this.minimo = 0;
 			
 		}
 		
-	public int numeroAzar() {
+	
+	public int girar(int minimo, int maximo) {
 		if (minimo>maximo) {
 			int temporal;
 			temporal = minimo;
@@ -25,6 +26,7 @@ public class RuedaDelDestino {
 		resultado = (int)(Math.random() * (maximo - minimo + 1)) + minimo;
 	    return resultado;
 	}
+
 		
 
 }
