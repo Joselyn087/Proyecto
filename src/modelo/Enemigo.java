@@ -7,6 +7,7 @@ public class Enemigo {
 	private int vitalidad;
 	private int danoAtaque;
 	private String nombreAtaque;
+	private String nivelDificultad;
 	
 	
 	public Enemigo() {
@@ -14,6 +15,7 @@ public class Enemigo {
 		vitalidad = 0;
 		danoAtaque = 0;
 		nombreAtaque = "";
+		nivelDificultad = "";
 		
 	}
 	
@@ -47,6 +49,14 @@ public class Enemigo {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public String getNivelDificultad() {
+		return nivelDificultad;
+	}
+
+	public void setNivelDificultad(String nivelDificultad) {
+		this.nivelDificultad = nivelDificultad;
 	}
 	
 

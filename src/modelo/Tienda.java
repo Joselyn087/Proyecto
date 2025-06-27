@@ -10,8 +10,8 @@ public class Tienda {
 	
 	
 	public Tienda() {
-		precioVitalidad = 10;
-		precioIntercambio = 20;
+		precioVitalidad = 50;
+		precioIntercambio = 60;
 		cantidadIntercambio = 3;
 		cantidadVitalidad = 3;	
 	}

@@ -1,17 +1,8 @@
 package modelo;
 
 public class RuedaDelDestino {
-	private int minimo;
-	private int maximo;
+	
 	private int resultado;
-		
-		
-		//Inicializar
-	public RuedaDelDestino() {
-		this.maximo = 0;
-		this.minimo = 0;
-			
-		}
 		
 	
 	public int girar(int minimo, int maximo) {
