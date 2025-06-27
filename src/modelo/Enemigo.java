@@ -1,6 +1,7 @@
+// Joselyn Salas Ramirez C4J596
+// Skylar Espinoza B82757
+
 package modelo;
-
-
 
 public class Enemigo {
 	private String nombre;
@@ -17,6 +18,14 @@ public class Enemigo {
 		nombreAtaque = "";
 		nivelDificultad = "";
 		
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	
 	public int getVitalidad() {
@@ -43,20 +52,17 @@ public class Enemigo {
 		this.nombreAtaque = nombreAtaque;
 	}
 	
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
+	
 	public String getNivelDificultad() {
 		return nivelDificultad;
 	}
 
 	public void setNivelDificultad(String nivelDificultad) {
 		this.nivelDificultad = nivelDificultad;
+	}
+	
+	public String toString() {
+		return "Enemigo: nombre: " + nombre + " vitalidad: " + vitalidad + " danoAtaque: " + danoAtaque + " nombreAtaque: " + nombreAtaque + " nivelDificultad: " + nivelDificultad;
 	}
 	
 

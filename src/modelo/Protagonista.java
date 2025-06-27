@@ -1,3 +1,5 @@
+// Joselyn Salas Ramirez C4J596
+// Skylar Espinoza B82757
 package modelo;
 
 
@@ -39,6 +41,15 @@ public class Protagonista {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	public int getVitalidad() {
+		return vitalidad;
+	}
+
+	public void setVitalidad(int vitalidad) {
+		this.vitalidad = vitalidad;
+	}
+	
 	public int getDanoAtaque() {
 		return danoAtaque;
 	}
@@ -94,17 +105,13 @@ public class Protagonista {
 	public void setDerrotas(int derrotas) {
 		this.derrotas = derrotas;
 	}
-	public int getVitalidad() {
-		return vitalidad;
-	}
-
-	public void setVitalidad(int vitalidad) {
-		this.vitalidad = vitalidad;
-	}
 	
-	@Override
+	
+	
 	public String toString() {
-		return "Protagonista: nombre: " + nombre + " vitalidad: " + vitalidad + "";
+		return "Protagonista: nombre: " + nombre + " vitalidad: " + vitalidad + " danoAtaque: " + danoAtaque + " nombreAtaque: " +nombreAtaque 
+				+ " pocionVitalidad: " + pocionVitalidad + " pocionIntercambio: " + pocionIntercambio + " dinero: " + dinero + " victorias: " 
+				+ victorias + " derrotas: " + derrotas ;
 	}
 
 }

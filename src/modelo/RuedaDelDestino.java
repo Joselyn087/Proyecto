@@ -1,3 +1,5 @@
+// Joselyn Salas Ramirez C4J596
+// Skylar Espinoza B82757
 package modelo;
 
 public class RuedaDelDestino {

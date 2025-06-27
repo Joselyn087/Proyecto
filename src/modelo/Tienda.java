@@ -1,5 +1,6 @@
+// Joselyn Salas Ramirez C4J596
+// Skylar Espinoza B82757
 package modelo;
-
 
 public class Tienda {
 	private int precioVitalidad;
@@ -24,6 +25,7 @@ public class Tienda {
 		this.cantidadVitalidad = cantidadVitalidad;
 	}
 	
+	
 	public int getPrecioVitalidad() {
 		return precioVitalidad;
 	}
@@ -31,6 +33,7 @@ public class Tienda {
 	public void setPrecioVitalidad(int precioVitalidad) {
 		this.precioVitalidad = precioVitalidad;
 	}
+	
 	
 	public int getPrecioIntercambio() {
 		return precioIntercambio;
@@ -40,12 +43,18 @@ public class Tienda {
 		this.precioIntercambio = precioIntercambio;
 	}
 	
+	
 	public int getCantidadIntercambio() {
 		return cantidadIntercambio;
 	}
 	
 	public void setCantidadIntercambio(int cantidadIntercambio) {
 		this.cantidadIntercambio = cantidadIntercambio;
+	}
+	
+	
+	public String toString() {
+		return "Tienda: precioVitalidad: " + precioVitalidad + " precioIntercambio: " + precioIntercambio;
 	}
 	
 	
